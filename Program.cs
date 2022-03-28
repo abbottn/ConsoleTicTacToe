@@ -12,6 +12,7 @@ namespace TicTacToe
 
             int numChallengers = getInteger("How many Challengers?: ");
             int boardSize = getInteger("What's the board size?: ");
+            string[,] board = new string[boardSize, boardSize];
 
             var message = $"Welcome {player}. You will have {numChallengers} Challengers on a {boardSize} X {boardSize} board!  ";
             Console.Write(message);
