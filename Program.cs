@@ -7,27 +7,53 @@ namespace TicTacToe
     {
         static void Main(string[] args)
         {
-            Console.Write("Tic Tac Toe Game.  What's your name?: ");
-            var player = Console.ReadLine();
-
-            int numChallengers = getInteger("How many Challengers?: ");
+            Console.WriteLine("Tic Tac Toe game");
+            int numPlayers = getInteger("How many Players?: ");
             int boardSize = getInteger("What's the board size?: ");
+            string[] tokens = { "X", "O", "Q", "V", "Z", "S"};
+            int row;
+            int column;
+            string token;
+            bool winner = false;
 
+            var message = $"Welcome. You will have {numPlayers} Players on a {boardSize} X {boardSize} board!  ";
+            Console.WriteLine(message);
 
-            var message = $"Welcome {player}. You will have {numChallengers} Challengers on a {boardSize} X {boardSize} board!  ";
-            Console.Write(message);
-
-            List<string> challengers = new List<string>();
-            for (int i = 0; i < numChallengers; i++)
+            List<string> players = new List<string>();
+            for (int i = 0; i < numPlayers; i++)
             {
-                Console.Write("What is the name of Challenger # {0}: ", i+1);
-                challengers.Add(Console.ReadLine());
+                Console.Write("What is the name of Player #{0}:? ", i+1);
+                players.Add(Console.ReadLine());
             }
 
             Board game = new Board(boardSize);
 
-            game.drawNewBoard();
-            // new code goes here
+            game.drawBoard();
+
+            while (!winner)
+            { 
+                foreach (string player in players)
+                {
+               
+                    int idx = players.IndexOf(player);
+                    token = tokens[idx];
+
+                    Console.Write(player);
+                    row = getInteger(", What row do you choose? ");
+
+                    Console.Write(player);
+                    column = getInteger(", What column do you choose? ");
+                    game.updateGrid(row, column, token);
+                    game.drawBoard();
+                    winner = game.checkWinner();
+                    if (winner)
+                    {
+                        message = $"Congratulations {player}.  You are the winner.";
+                        Console.WriteLine(message);
+                        break;
+                    }
+                }
+            }
         }
         public static int getInteger(string inputMsg)
         {

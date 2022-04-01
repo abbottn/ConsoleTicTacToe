@@ -25,7 +25,7 @@ namespace TicTacToe
             }
         }
 
-        public void drawNewBoard()
+        public void drawBoard()
         {
             Console.Clear();
             for (int i = 0; i < boardSize; i++)
@@ -48,6 +48,79 @@ namespace TicTacToe
                 Console.WriteLine();
             }
 
+        }
+
+        public void updateGrid(int row, int column, string token)
+        {
+            grid[row-1, column-1] = token;      
+        }
+
+        public bool checkWinner()
+        {
+            bool winner = false;
+            bool middleCheck = true;
+            for (int i = 0; i < boardSize; i++)  // check rows for winner
+            {
+                for (int j = 0; j < boardSize; j++)
+                {
+                    if (j > 0)
+                    {
+                        if (grid[i,j] != grid[i, j-1]) 
+                        {
+                            middleCheck = false;
+                            break;
+                        }
+                    } 
+                }
+                if (middleCheck)
+                {
+                    winner = true;
+                    return winner;
+                }
+            }
+            for (int j = 0; j < boardSize; j++)  // check columns for winner
+            {
+                for (int i = 0; i < boardSize; i++)
+                {
+                    if (i > 0)
+                    {
+                        if (grid[i, j] != grid[i - 1, j])  
+                        {
+                            middleCheck = false;
+                            break;
+                        }
+                    }
+                }
+                if (middleCheck)
+                {
+                    winner = true;
+                    return winner;
+                }
+            }
+            for (int i = 0; i < boardSize; i++)  // check diagonal for winner
+            {
+                for (int j = 0; j < boardSize; j++)
+                {
+                    if (i != 0 && j != 0)
+                    {
+                        if (i == j)
+                        {
+                            if (grid[i, j] != grid[i - 1, j - 1])
+                            {
+                                middleCheck = false;
+                                break;
+                            }
+                        }
+                    }
+                    
+                }
+                if (middleCheck)
+                {
+                    winner = true;
+                    return winner;
+                }
+            }
+            return winner;
         }
     }
 }
